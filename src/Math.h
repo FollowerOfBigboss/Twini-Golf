@@ -14,7 +14,7 @@ struct Vector2f
 
 	void print()
 	{
-		std::cout << x << ", " << y << std::endl;
+		std::cout << x << ", " << y << "\n";
 	}
 
 	float x, y;

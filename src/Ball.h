@@ -13,35 +13,18 @@ class Ball : public Entity
 {
 public:
 	Ball(Vector2f p_pos, SDL_Texture* p_tex, SDL_Texture* p_pointTex, SDL_Texture* p_powerMTexFG, SDL_Texture* p_powerMTexBG, int p_index);
-    Vector2f& getVelocity()
-	{
-		return velocity;
-	}
-    Vector2f& getInitialMousePos()
-	{
-		return initialMousePos;
-	}
-    std::vector<Entity> getPoints()
-	{
-		return points;
-	}
-    std::vector<Entity> getPowerBar()
-	{
-		return powerBar;
-	}
-    int getStrokes()
-    {
-        return strokes;
-    }
-    bool isWin()
-    {
-        return win;
-    }
+    
+    inline Vector2f getVelocity() const { return velocity; }
+    inline Vector2f getInitialMousePos() const { return initialMousePos; }
+    inline std::vector<Entity> getPoints() const { return points; }
+    inline std::vector<Entity> getPowerBar() const { return powerBar; }
+    inline int getStrokes() const { return strokes; }
+    inline bool isWin() const { return win; }
     void setWin(bool p_win);
     void setInitialMousePos(float x, float y);
     void setVelocity(float x, float y);
     void setLaunchedVelocity(float x, float y);
-    void update(double deltaTime, bool mouseDown, bool mousePressed, std::vector<Tile> tiles, std::vector<Hole> holes,Mix_Chunk* chargeSfx, Mix_Chunk* swingSfx, Mix_Chunk* holeSfx);
+    void update(double deltaTime, bool mouseDown, bool mousePressed, const std::vector<Tile>& tiles, const std::vector<Hole>& holes, Mix_Chunk* chargeSfx, Mix_Chunk* swingSfx, Mix_Chunk* holeSfx);
 private:
     Vector2f velocity;
     Vector2f target;

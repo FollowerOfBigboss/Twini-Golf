@@ -12,16 +12,6 @@ Entity::Entity(Vector2f p_pos, SDL_Texture* p_tex)
 	SDL_QueryTexture(p_tex, NULL, NULL, &currentFrame.w, &currentFrame.h);
 }
 
-SDL_Texture* Entity::getTex()
-{
-	return tex;
-}
-
-void Entity::update(double deltaTime)
-{
-
-}
-
 void Entity::setPos(float x, float y)
 {
 	pos.x = x;
@@ -37,9 +27,4 @@ void Entity::setScale(float w, float h)
 {
 	scale.x = w;
 	scale.y = h;
-}
-
-SDL_Rect Entity::getCurrentFrame()
-{
-	return currentFrame;
 }

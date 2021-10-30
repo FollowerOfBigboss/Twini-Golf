@@ -14,12 +14,26 @@
 
 bool init()
 {
-	if (SDL_Init(SDL_INIT_VIDEO) > 0)
+	if (SDL_Init(SDL_INIT_VIDEO) != 0)
+	{
 		std::cout << "HEY.. SDL_Init HAS FAILED. SDL_ERROR: " << SDL_GetError() << std::endl;
-	if (!(IMG_Init(IMG_INIT_PNG)))
+		return false;
+	}
+
+	int flags = IMG_INIT_PNG;
+	int initted = IMG_Init(flags);
+	if ((initted & flags) != flags) 
+	{
 		std::cout << "IMG_init has failed. Error: " << IMG_GetError() << std::endl;
-	if ((TTF_Init()))
+		return false;
+	}
+
+	if (TTF_Init() == -1)
+	{
 		std::cout << "TTF_init has failed. Error: " << TTF_GetError() << std::endl;
+		return false;
+	}
+
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 	return true;
 }
