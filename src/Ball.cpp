@@ -84,7 +84,8 @@ void Ball::update(double deltaTime, bool mouseDown, bool mousePressed, std::vect
         playedSwingFx = false;
         int mouseX = 0;
 	    int mouseY = 0;
-	    SDL_GetMouseState(&mouseX, &mouseY);
+//	    SDL_GetMouseState(&mouseX, &mouseY);
+        SDL_GetGlobalMouseState(&mouseX, &mouseY);
         setInitialMousePos(mouseX, mouseY);
     }
     if (mouseDown && canMove)
@@ -92,7 +93,9 @@ void Ball::update(double deltaTime, bool mouseDown, bool mousePressed, std::vect
         
         int mouseX = 0;
 	    int mouseY = 0;
-	    SDL_GetMouseState(&mouseX, &mouseY);
+//	    SDL_GetMouseState(&mouseX, &mouseY);
+        SDL_GetGlobalMouseState(&mouseX, &mouseY);
+
         setVelocity((mouseX - getInitialMousePos().x)/-150, (mouseY - getInitialMousePos().y)/-150);
         setLaunchedVelocity((mouseX - getInitialMousePos().x)/-150, (mouseY - getInitialMousePos().y)/-150);
         velocity1D = SDL_sqrt(SDL_pow(abs(getVelocity().x), 2) + SDL_pow(abs(getVelocity().y), 2));
@@ -151,7 +154,8 @@ void Ball::update(double deltaTime, bool mouseDown, bool mousePressed, std::vect
             setVelocity(0,0);
             int mouseX = 0;
 	        int mouseY = 0;
-            SDL_GetMouseState(&mouseX, &mouseY);
+            // SDL_GetMouseState(&mouseX, &mouseY);
+            SDL_GetGlobalMouseState(&mouseX, &mouseY);
             setInitialMousePos(mouseX, mouseY);
             canMove = true;
         }

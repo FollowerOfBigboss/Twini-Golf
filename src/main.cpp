@@ -4,6 +4,7 @@
 #include <SDL2/SDL_mixer.h>
 #include <iostream>
 #include <vector>
+#include <string>
 
 #include "RenderWindow.h"
 #include "Entity.h"
@@ -255,6 +256,7 @@ void update()
 			break;
 		}
 	}
+	 mouseDown = (SDL_GetGlobalMouseState(NULL, NULL) & SDL_BUTTON_LMASK) & mouseDown;
 
 	if (state == 1)
 	{
