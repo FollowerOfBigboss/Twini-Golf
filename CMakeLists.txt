@@ -22,6 +22,8 @@ add_executable(tWin
 	src/RenderWindow.cpp
 	src/Math.h
 	src/main.cpp
+	src/Game.h
+	src/Game.cpp
 )
 
 target_link_libraries(tWin SDL2::Main SDL2::Mixer SDL2::Image SDL2::TTF)

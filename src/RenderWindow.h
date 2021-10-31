@@ -11,7 +11,10 @@
 class RenderWindow 
 {
 public:
+	RenderWindow() {};
 	RenderWindow(const std::string& p_title, int p_w, int p_h);
+	void init(const std::string& p_title, int p_w, int p_h);
+
 	SDL_Texture* loadTexture(const std::string& p_filePath);
 	void cleanUp();
 	void clear();
