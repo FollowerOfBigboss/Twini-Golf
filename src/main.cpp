@@ -11,9 +11,23 @@
 int main(int argc, char* args[])
 {
 	Game game;
-	game.InitiazeSdlAndModules();
-	game.InitiliazeGameWindow();
-	game.InitGameAssets();
+	if (game.InitiazeSdlAndModules() != true)
+	{
+		std::cout << "Initialization of SDL or SDL libraries are failed.\n";
+		return 1;
+	}
+
+	if (game.InitiliazeGameWindow("Twini-Golf", 640, 480) != true)
+	{
+		return 1;
+	}
+
+	if (game.InitGameAssets() != true)
+	{
+		std::cout << "Asset loading failed!" << "\n";
+		return 1;
+	}
+
 	game.loadLevel(game.level);
 	
 	while (game.gameRunning)
@@ -21,6 +35,7 @@ int main(int argc, char* args[])
 		game.game();
 	}
 
+	// Optinal
 	game.cleanup();
 	return 0;
 }

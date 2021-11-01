@@ -1,3 +1,5 @@
+#include <memory>
+
 #include "RenderWindow.h"
 #include "Entity.h"
 #include "Ball.h"	
@@ -9,8 +11,8 @@ class Game
 public:
 	Game();
 	bool InitiazeSdlAndModules();
-	void InitiliazeGameWindow();
-	void InitGameAssets();
+	bool InitiliazeGameWindow(const std::string& title, int w, int h);
+	bool InitGameAssets();
 
 
 	void loadLevel(int level);
@@ -22,7 +24,7 @@ public:
 
 private:
 
-	std::vector<Tile> loadTiles(int level);
+	void loadTiles(int level);
 	std::string getStrokeText();
 	std::string getLevelText(int side);
 
@@ -57,28 +59,36 @@ private:
 	Mix_Chunk* swingSfx;
 	Mix_Chunk* holeSfx;
 
-	// Color
-	SDL_Color white;
-	SDL_Color black;
+	// Colors
+	const SDL_Color white = { 255, 255, 255 };
+	const SDL_Color black = { 0, 0, 0 };
 
 	// Fonts
 	TTF_Font* font32;
 	TTF_Font* font48;
 	TTF_Font* font24;
 
+	// Game Objects
 	Ball* balls[2];
 	std::vector<Hole> holes;
-
+	
+	// Tile textures
 	std::vector<Tile> tiles;
+
+	// Mouse states
 	bool mouseDown;
 	bool mousePressed;
 
 	bool swingPlayed;
 	bool secondSwingPlayed;
-	SDL_Event event;
-
+	// Game state
 	int state;
+
+	// Tick stuff
 	Uint64 currentTick;
 	Uint64 lastTick;
 	double deltaTime;
+	
+	// unimportant sdl event structure
+	SDL_Event event;
 };

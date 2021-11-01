@@ -6,39 +6,30 @@
 #include "RenderWindow.h"
 #include "Entity.h"
 
-RenderWindow::RenderWindow(const std::string& p_title, int p_w, int p_h)
-	:window(NULL), renderer(NULL)
+bool RenderWindow::init(const std::string& p_title, int p_w, int p_h)
 {
 	window = SDL_CreateWindow(p_title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, p_w, p_h, SDL_WINDOW_SHOWN);
 
 	if (window == NULL)
 	{
-		std::cout << "Window failed to init. Error: " << SDL_GetError() << std::endl;
-		exit(1);
+		std::cout << "Window failed to init. Error: " << SDL_GetError() << "\n";
+		return false;
 	}
 
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	if (renderer == NULL)
 	{
-		exit(1);
+		std::cout << "Renderer creation failed. Error: " << SDL_GetError() << "\n";
+		return false;
 	}
+
+	return true;
 }
 
-void RenderWindow::init(const std::string& p_title, int p_w, int p_h)
+void RenderWindow::cleanup()
 {
-	window = SDL_CreateWindow(p_title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, p_w, p_h, SDL_WINDOW_SHOWN);
-
-	if (window == NULL)
-	{
-		std::cout << "Window failed to init. Error: " << SDL_GetError() << std::endl;
-		exit(1);
-	}
-
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-	if (renderer == NULL)
-	{
-		exit(1);
-	}
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
 }
 
 SDL_Texture* RenderWindow::loadTexture(const std::string& p_filePath)
@@ -55,10 +46,6 @@ SDL_Texture* RenderWindow::loadTexture(const std::string& p_filePath)
 	return texture;
 }
 
-void RenderWindow::cleanUp()
-{
-	SDL_DestroyWindow(window);
-}
 
 void RenderWindow::clear()
 {
