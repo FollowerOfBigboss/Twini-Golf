@@ -8,6 +8,10 @@
 
 #include "Game.h"
 
+// For debug purposes 
+const int Width = 640;
+const int Height = 480;
+
 int main(int argc, char* args[])
 {
 	Game game;
@@ -17,7 +21,7 @@ int main(int argc, char* args[])
 		return 1;
 	}
 
-	if (game.InitiliazeGameWindow("Twini-Golf", 640, 480) != true)
+	if (game.InitiliazeGameWindow("Twini-Golf", Width, Height) != true)
 	{
 		return 1;
 	}

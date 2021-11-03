@@ -16,11 +16,18 @@ public:
 
 	SDL_Texture* loadTexture(const std::string& p_filePath);
 	void clear();
+	void renderbg(SDL_Texture* bg);
 	void render(Entity& p_entity);
 	void render(int x, int y, SDL_Texture* p_tex);
 	void render(float p_x, float p_y, const std::string& p_string, TTF_Font* font, SDL_Color textColor);
 	void renderCenter(float p_x, float p_y, const std::string& p_string, TTF_Font* font, SDL_Color textColor);
+	void renderTopCenter(float p_x, float p_y, const std::string& p_string, TTF_Font* font, SDL_Color textColor);
+
 	void display();
+
+
+	int w;
+	int h;
 
 private:
 	SDL_Window* window;

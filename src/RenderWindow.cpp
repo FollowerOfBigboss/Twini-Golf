@@ -23,6 +23,8 @@ bool RenderWindow::init(const std::string& p_title, int p_w, int p_h)
 		return false;
 	}
 
+	w = p_w;
+	h = p_h;
 	return true;
 }
 
@@ -50,6 +52,11 @@ SDL_Texture* RenderWindow::loadTexture(const std::string& p_filePath)
 void RenderWindow::clear()
 {
 	SDL_RenderClear(renderer);
+}
+
+void RenderWindow::renderbg(SDL_Texture* bg)
+{
+	SDL_RenderCopy(renderer, bg, NULL, NULL);
 }
 
 void RenderWindow::render(Entity& p_entity)
@@ -122,8 +129,30 @@ void RenderWindow::renderCenter(float p_x, float p_y, const std::string& p_text,
 	src.h = surfaceMessage->h;
 
 	SDL_Rect dst;
-	dst.x = 640 / 2 - src.w / 2 + p_x;
-	dst.y = 480 / 2 - src.h / 2 + p_y;
+	dst.x = w / 2 - src.w / 2 + p_x;
+	dst.y = h / 2 - src.h / 2 + p_y;
+	dst.w = src.w;
+	dst.h = src.h;
+
+	SDL_RenderCopy(renderer, message, &src, &dst);
+	SDL_FreeSurface(surfaceMessage);
+	SDL_DestroyTexture(message);
+}
+
+void RenderWindow::renderTopCenter(float p_x, float p_y, const std::string& p_string, TTF_Font* font, SDL_Color textColor)
+{
+	SDL_Surface* surfaceMessage = TTF_RenderText_Blended(font, p_string.c_str(), textColor);
+	SDL_Texture* message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+
+	SDL_Rect src;
+	src.x = 0;
+	src.y = 0;
+	src.w = surfaceMessage->w;
+	src.h = surfaceMessage->h;
+
+	SDL_Rect dst;
+	dst.x = w / 2 - src.w / 2 + p_x;
+	dst.y = 0 + p_y;
 	dst.w = src.w;
 	dst.h = src.h;
 

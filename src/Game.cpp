@@ -161,8 +161,11 @@ void Game::loadLevel(int level)
 	switch (level)
 	{
 	case 0:
-		balls[0]->setPos(24 + 32 * 4, 24 + 32 * 11);
-		balls[1]->setPos(24 + 32 * 4 + 32 * 10, 24 + 32 * 11);
+		// balls[0]->setPos(24 + 32 * 4, 24 + 32 * 11);
+		// balls[1]->setPos(24 + 32 * 4 + 32 * 10, 24 + 32 * 11);
+
+		balls[0]->setPos((window.w / 2) / 2, window.h * 0.8 );
+		balls[1]->setPos((window.w / 2) + (window.w / 2) / 2, window.h * 0.8);
 
 		holes.at(0).setPos(24 + 32 * 4, 22 + 32 * 2);
 		holes.at(1).setPos(24 + 32 * 4 + 32 * 10, 22 + 32 * 2);
@@ -278,6 +281,7 @@ void Game::loadTiles(int level)
 		tiles.push_back(Tile(Vector2f(64 * 0 + 64 * 5, 64 * 3), tileLightTexture64));
 		tiles.push_back(Tile(Vector2f(64 * 1 + 64 * 5, 64 * 3), tileLightTexture64));
 		break;
+
 	case 1:
 		tiles.push_back(Tile(Vector2f(64 * 2, 64 * 3), tileDarkTexture64));
 		tiles.push_back(Tile(Vector2f(64 * 4 + 64 * 5, 64 * 3), tileLightTexture64));
@@ -411,7 +415,9 @@ void Game::update()
 void Game::graphics()
 {
 	window.clear();
-	window.render(0, 0, bgTexture);
+	// window.render(0, 0, bgTexture);
+	window.renderbg(bgTexture);
+
 	for (Hole& h : holes)
 	{
 		window.render(h);
@@ -443,21 +449,30 @@ void Game::graphics()
 	}
 	if (state != 2)
 	{
-		window.render(640 / 4 - 132 / 2, 480 - 32, levelTextBgTexture);
+		// window.render(640 / 4 - 132 / 2, 480 - 32, levelTextBgTexture);
+		window.render(window.w / 4 - 132 / 2, window.h - 32, levelTextBgTexture);
+
 		window.renderCenter(-160, 240 - 16 + 3, getLevelText(0), font24, black);
 		window.renderCenter(-160, 240 - 16, getLevelText(0), font24, white);
 
-		window.render(640 / 2 + 640 / 4 - 132 / 2, 480 - 32, levelTextBgTexture);
+		// window.render(640 / 2 + 640 / 4 - 132 / 2, 480 - 32, levelTextBgTexture);
+		window.render(window.w / 2 + window.w / 4 - 132 / 2, window.h - 32, levelTextBgTexture);
 		window.renderCenter(160, 240 - 16 + 3, getLevelText(1), font24, black);
 		window.renderCenter(160, 240 - 16, getLevelText(1), font24, white);
 
-		window.render(640 / 2 - 196 / 2, 0, uiBgTexture);
-		window.renderCenter(0, -240 + 16 + 3, getStrokeText(), font24, black);
-		window.renderCenter(0, -240 + 16, getStrokeText(), font24, white);
+		// window.render(640 / 2 - 196 / 2, 0, uiBgTexture);
+		window.render(window.w / 2 - 196 / 2, 0, uiBgTexture);
+//		window.renderCenter(0, -240 + 16 + 3, getStrokeText(), font24, black);
+//		window.renderCenter(0, -240 + 16, getStrokeText(), font24, white);
+
+		window.renderTopCenter(0, 3, getStrokeText(), font24, black);
+		window.renderTopCenter(0, 0, getStrokeText(), font24, white);
+
 	}
 	else
 	{
-		window.render(0, 0, endscreenOverlayTexture);
+		// window.render(0, 0, endscreenOverlayTexture);
+		window.renderbg(endscreenOverlayTexture);
 		window.renderCenter(0, 3 - 32, "YOU COMPLETED THE COURSE!", font48, black);
 		window.renderCenter(0, -32, "YOU COMPLETED THE COURSE!", font48, white);
 		window.renderCenter(0, 3 + 32, getStrokeText(), font32, black);
@@ -487,8 +502,10 @@ void Game::titleScreen()
 		}
 
 		window.clear();
-		window.render(0, 0, bgTexture);
-		window.render(0, 0, splashBgTexture);
+		//window.render(0, 0, bgTexture);
+		window.renderbg(bgTexture);
+//		window.render(0, 0, splashBgTexture);
+		window.renderbg(splashBgTexture);
 		window.renderCenter(0, 0 + 3, "POLYMARS", font32, black);
 		window.renderCenter(0, 0, "POLYMARS", font32, white);
 		window.display();
@@ -522,11 +539,20 @@ void Game::titleScreen()
 			}
 		}
 		window.clear();
-		window.render(0, 0, bgTexture);
-		window.render(320 - 160, 240 - 100 - 50 + 4 * SDL_sin(SDL_GetTicks() * (3.14 / 1500)), logoTexture);
-		window.render(0, 0, click2start);
-		window.renderCenter(0, 240 - 48 + 3 - 16 * 5, "LEFT CLICK TO START", font32, black);
-		window.renderCenter(0, 240 - 48 - 16 * 5, "LEFT CLICK TO START", font32, white);
+		// window.render(0, 0, bgTexture);
+		window.renderbg(bgTexture);
+		
+		// window.render(320 - 160, 240 - 100 - 50 + 4 * SDL_sin(SDL_GetTicks() * (3.14 / 1500)), logoTexture);
+		window.render( (window.w / 2) - 160, 240 - 100 - 50 + 4 * SDL_sin(SDL_GetTicks() * (3.14 / 1500)), logoTexture);
+
+//		window.render(0, 0, click2start);
+		window.renderbg(click2start);
+		//window.renderCenter(0, 240 - 48 + 3 - 16 * 5, "LEFT CLICK TO START", font32, black);
+		window.renderCenter(0, (window.h/2) - 48 + 3 - 16 * 5, "LEFT CLICK TO START", font32, black);
+
+//		window.renderCenter(0, 240 - 48 - 16 * 5, "LEFT CLICK TO START", font32, white);
+		window.renderCenter(0, (window.h/2) - 48 - 16 * 5, "LEFT CLICK TO START", font32, white);
+
 		window.display();
 	}
 }
